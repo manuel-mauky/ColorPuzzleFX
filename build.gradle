@@ -9,10 +9,11 @@ repositories {
 
 
 dependencies {
-    compile "org.assertj:assertj-core:1.6.0"
 
     compile 'de.saxsys:mvvmFX:0.1.4'
 
     // testing
     testCompile "junit:junit:4.11"
+    testCompile "org.assertj:assertj-core:1.6.0"
+    testCompile "eu.lestard:assertj-javafx:0.1.0-SNAPSHOT"
 }
