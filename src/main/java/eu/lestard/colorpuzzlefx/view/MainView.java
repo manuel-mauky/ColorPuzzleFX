@@ -36,6 +36,8 @@ public class MainView extends View<MainViewModel> {
 
         int size = Configuration.size.get();
         GridModel<Colors> gridModel = new GridModel<>(size, size);
+        gridModel.init();
+
 
         gridView.setGridModel(gridModel);
 

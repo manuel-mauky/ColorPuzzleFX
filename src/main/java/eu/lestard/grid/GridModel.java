@@ -3,6 +3,8 @@ package eu.lestard.grid;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import java.util.List;
+
 public class GridModel<State extends Enum> {
 
     private final ObservableList<Cell<State>> cells = FXCollections.observableArrayList();
@@ -40,6 +42,10 @@ public class GridModel<State extends Enum> {
                 (cell.getColumn() == column && cell.getRow() == row))
             .findFirst()
             .orElse(null);
+    }
+
+    public List<Cell<State>> getCells(){
+        return cells;
     }
 
     public void setDefaultState(State defaultState) {
