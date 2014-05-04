@@ -3,9 +3,7 @@ package eu.lestard.grid;
 import eu.lestard.colorpuzzlefx.core.Configuration;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.NumberBinding;
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.ReadOnlyObjectProperty;
-import javafx.beans.property.SimpleObjectProperty;
+import javafx.collections.ListChangeListener;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
@@ -18,10 +16,15 @@ import java.util.Map;
 public class GridView<State extends Enum> extends StackPane {
 
 
-    private ObjectProperty<GridModel<State>> gridModelProperty = new SimpleObjectProperty<>();
     private Pane rootPane = new Pane();
 
     private Map<State, Color> colorMapping = new HashMap<>();
+
+    private GridModel<State> gridModel = new GridModel<>();
+
+
+    private Map<Cell<State>, Rectangle> rectangleMap = new HashMap<>();
+
 
     public GridView(){
         final NumberBinding fullSize = Bindings.min(this.widthProperty(), this.heightProperty());
@@ -33,62 +36,62 @@ public class GridView<State extends Enum> extends StackPane {
 
         rootPane.setStyle("-fx-border-color:black");
 
-        gridModelProperty.addListener((obs, oldValue, newGridModel) -> {
-            init();
-        });
+        init();
     }
 
     private void init(){
-        final GridModel<State> gridModel = getGridModel();
+        NumberBinding pxPerCell = Bindings.min(rootPane.widthProperty(), rootPane.heightProperty()).divide(Configuration.size);
 
-        int size = Configuration.size.get();
+        gridModel.cells().addListener((ListChangeListener<Cell<State>>) change -> {
+            while(change.next()) {
 
-        NumberBinding pxPerCell = Bindings.min(rootPane.widthProperty(), rootPane.heightProperty()).divide(size);
+                if (change.wasAdded()) {
+                    change.getAddedSubList().forEach(cell -> {
+                        NumberBinding xStart = pxPerCell.multiply(cell.getColumn());
+                        NumberBinding yStart = pxPerCell.multiply(cell.getRow());
 
+                        Rectangle rectangle = new Rectangle();
+                        rectangle.setStrokeType(StrokeType.INSIDE);
+                        rectangle.setStroke(Color.LIGHTGREY);
+                        rectangle.setStrokeWidth(1);
 
-        gridModel.getCells().forEach(cell -> {
-            NumberBinding xStart = pxPerCell.multiply(cell.getColumn());
-            NumberBinding yStart = pxPerCell.multiply(cell.getRow());
+                        rectangle.xProperty().bind(xStart);
+                        rectangle.yProperty().bind(yStart);
 
-            Rectangle rectangle = new Rectangle();
+                        rectangle.widthProperty().bind(pxPerCell);
+                        rectangle.heightProperty().bind(pxPerCell);
 
-            rectangle.setStrokeType(StrokeType.INSIDE);
-            rectangle.setStroke(Color.LIGHTGREY);
-            rectangle.setStrokeWidth(1);
+                        rectangle.setFill(colorMapping.get(cell.stateProperty().get()));
 
-            rectangle.xProperty().bind(xStart);
-            rectangle.yProperty().bind(yStart);
+                        rectangleMap.put(cell, rectangle);
 
-            rectangle.widthProperty().bind(pxPerCell);
-            rectangle.heightProperty().bind(pxPerCell);
+                        rootPane.getChildren().add(rectangle);
+                    });
+                }
 
+                if (change.wasRemoved()) {
+                    change.getRemoved().forEach(cell -> {
 
-            rectangle.setFill(colorMapping.get(cell.stateProperty().get()));
+                        final Rectangle rectangle = rectangleMap.get(cell);
+                        rootPane.getChildren().remove(rectangle);
 
-            rootPane.getChildren().add(rectangle);
+                        rectangleMap.remove(cell);
+                    });
+                }
+            }
         });
-
-
-    }
-
-    public GridView(GridModel<State> gridModel){
-        setGridModel(gridModel);
-    }
-
-    public void setGridModel(GridModel<State> gridModel){
-        this.gridModelProperty.setValue(gridModel);
     }
 
     public GridModel<State> getGridModel(){
-        return gridModelProperty.get();
-    }
-
-    public ReadOnlyObjectProperty<GridModel<State>> gridModelProperty(){
-        return gridModelProperty;
+        return gridModel;
     }
 
     public void addColorMapping(State state, Color color){
         this.colorMapping.put(state, color);
+    }
+
+    Pane getRootPane(){
+        return rootPane;
     }
 
 

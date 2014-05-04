@@ -4,10 +4,10 @@ import de.saxsys.jfx.mvvm.base.view.View;
 import eu.lestard.colorpuzzlefx.core.ColorProfile;
 import eu.lestard.colorpuzzlefx.core.Colors;
 import eu.lestard.colorpuzzlefx.core.Configuration;
-import eu.lestard.grid.GridModel;
 import eu.lestard.grid.GridView;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Rectangle;
 
@@ -20,10 +20,17 @@ public class MainView extends View<MainViewModel> {
     private VBox buttonBar;
 
     @FXML
+    private BorderPane mainContainer;
+
     private GridView<Colors> gridView;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
+        gridView = new GridView<>();
+
+        mainContainer.setCenter(gridView);
+
         ColorProfile profile = new ColorProfile();
 
         profile.getProfile().forEach((state, profileColor) -> {
@@ -34,12 +41,8 @@ public class MainView extends View<MainViewModel> {
             gridView.addColorMapping(state, profileColor);
         });
 
-        int size = Configuration.size.get();
-        GridModel<Colors> gridModel = new GridModel<>(size, size);
-        gridModel.init();
 
-
-        gridView.setGridModel(gridModel);
-
+        gridView.getGridModel().numberOfColumns().bind(Configuration.size);
+        gridView.getGridModel().numberOfRows().bind(Configuration.size);
     }
 }
