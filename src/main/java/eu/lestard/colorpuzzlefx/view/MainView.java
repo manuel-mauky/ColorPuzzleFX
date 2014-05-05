@@ -12,6 +12,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.shape.Rectangle;
 
 import java.net.URL;
+import java.util.Random;
 import java.util.ResourceBundle;
 
 public class MainView extends View<MainViewModel> {
@@ -44,5 +45,15 @@ public class MainView extends View<MainViewModel> {
 
         gridView.getGridModel().numberOfColumns().bind(Configuration.size);
         gridView.getGridModel().numberOfRows().bind(Configuration.size);
+
+        final Colors[] colorArray = profile.getProfile().keySet().toArray(new Colors[0]);
+
+        Random rnd = new Random();
+
+        gridView.getGridModel().getCells().forEach(cell ->{
+            final Colors color = colorArray[rnd.nextInt(colorArray.length)];
+            cell.changeState(color);
+        });
+
     }
 }

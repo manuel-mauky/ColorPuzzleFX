@@ -63,6 +63,10 @@ public class GridView<State extends Enum> extends StackPane {
 
                         rectangle.setFill(colorMapping.get(cell.stateProperty().get()));
 
+                        cell.stateProperty().addListener((obs, oldValue, newValue) -> {
+                            rectangle.setFill(colorMapping.get(newValue));
+                        });
+
                         rectangleMap.put(cell, rectangle);
 
                         rootPane.getChildren().add(rectangle);
