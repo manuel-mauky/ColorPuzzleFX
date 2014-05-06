@@ -7,6 +7,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 public class GridModel<State extends Enum> {
@@ -18,7 +19,7 @@ public class GridModel<State extends Enum> {
     private State defaultState;
 
 
-    GridModel() {
+    public GridModel() {
         ChangeListener<Number> sizeChanged = (obs, oldValue, newValue) -> {
             init();
         };
@@ -61,6 +62,28 @@ public class GridModel<State extends Enum> {
             .orElse(null);
     }
 
+
+    public List<Cell<State>> getNeighbours(int column, int row) {
+        List<Cell<State>> result = new ArrayList<>();
+
+        addIfNotNull(result, getCell(column + 1, row));
+        addIfNotNull(result, getCell(column - 1, row));
+        addIfNotNull(result, getCell(column, row + 1));
+        addIfNotNull(result, getCell(column, row - 1));
+
+        return result;
+    }
+
+    private <T> void addIfNotNull(Collection<T> collection, T element){
+        if(element != null){
+            collection.add(element);
+        }
+    }
+
+    public List<Cell<State>> getNeighbours(Cell<State> cell){
+        return getNeighbours(cell.getColumn(), cell.getRow());
+    }
+
     public List<Cell<State>> getCells(){
         return cells;
     }
@@ -92,4 +115,5 @@ public class GridModel<State extends Enum> {
     public void setNumberOfRows(int value){
         numberOfRows.set(value);
     }
+
 }

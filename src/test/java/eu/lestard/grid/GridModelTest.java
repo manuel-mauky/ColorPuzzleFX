@@ -3,6 +3,8 @@ package eu.lestard.grid;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.List;
+
 import static eu.lestard.assertj.javafx.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -141,5 +143,43 @@ public class GridModelTest {
         final Cell cellOutOfRange = model.getCell(3, 5);
 
         assertThat(cellOutOfRange).isNull();
+    }
+
+
+    @Test
+    public void testGetNeighbours(){
+        model.setNumberOfColumns(4);
+        model.setNumberOfRows(4);
+
+        final List<Cell<States>> neighbours = model.getNeighbours(2, 2);
+
+        assertThat(neighbours).hasSize(4);
+
+        assertThat(neighbours).contains(model.getCell(1, 2));
+        assertThat(neighbours).contains(model.getCell(3, 2));
+        assertThat(neighbours).contains(model.getCell(2, 1));
+        assertThat(neighbours).contains(model.getCell(2, 3));
+    }
+
+    @Test
+    public void testGetNeighboursIsEmptyWhenGridIsEmpty(){
+        model.setNumberOfColumns(0);
+        model.setNumberOfRows(0);
+
+        final List<Cell<States>> neighbours = model.getNeighbours(0, 0);
+
+        assertThat(neighbours).isNotNull().isEmpty();
+    }
+
+    @Test
+    public void testGetNeighboursAtEdgeOfGrid(){
+        model.setNumberOfColumns(4);
+        model.setNumberOfRows(4);
+
+        final List<Cell<States>> neighbours = model.getNeighbours(0,0);
+
+        assertThat(neighbours).hasSize(2);
+        assertThat(neighbours).contains(model.getCell(0, 1));
+        assertThat(neighbours).contains(model.getCell(1, 0));
     }
 }

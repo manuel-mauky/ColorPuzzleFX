@@ -33,4 +33,9 @@ public class Cell <State extends Enum> {
     public int getRow() {
         return row;
     }
+
+    @Override
+    public String toString() {
+        return "cell[" + column + "," + row + "]";
+    }
 }
