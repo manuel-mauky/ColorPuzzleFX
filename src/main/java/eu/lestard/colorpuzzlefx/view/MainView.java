@@ -39,7 +39,10 @@ public class MainView extends View<MainViewModel> {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
+        GridModel<Colors> gridModel = new GridModel<>();
+
         gridView = new GridView<>();
+        gridView.setGridModel(gridModel);
 
         mainContainer.setCenter(gridView);
 
@@ -53,7 +56,6 @@ public class MainView extends View<MainViewModel> {
 
             gridView.addColorMapping(state, profileColor);
         });
-        final GridModel<Colors> gridModel = gridView.getGridModel();
 
         gridModel.numberOfColumns().bind(Configuration.size);
         gridModel.numberOfRows().bind(Configuration.size);
