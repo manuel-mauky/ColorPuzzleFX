@@ -7,14 +7,15 @@ import eu.lestard.colorpuzzlefx.core.Configuration;
 import eu.lestard.colorpuzzlefx.core.GameLogic;
 import eu.lestard.grid.GridModel;
 import eu.lestard.grid.GridView;
+import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Rectangle;
 
 import java.net.URL;
-import java.util.Random;
 import java.util.ResourceBundle;
 
 public class MainView extends View<MainViewModel> {
@@ -30,14 +31,17 @@ public class MainView extends View<MainViewModel> {
 
     private GameLogic gameLogic;
 
+    @FXML
+    private Label movesLabel;
+
+    private ColorProfile profile = new ColorProfile();
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
         gridView = new GridView<>();
 
         mainContainer.setCenter(gridView);
-
-        ColorProfile profile = new ColorProfile();
 
         profile.getProfile().forEach((state, profileColor) -> {
             Button button = new Button();
@@ -54,18 +58,23 @@ public class MainView extends View<MainViewModel> {
         gridModel.numberOfColumns().bind(Configuration.size);
         gridModel.numberOfRows().bind(Configuration.size);
 
-        final Colors[] colorArray = profile.getProfile().keySet().toArray(new Colors[0]);
 
-        Random rnd = new Random();
 
-        gridModel.getCells().forEach(cell ->{
-            final Colors color = colorArray[rnd.nextInt(colorArray.length)];
-            cell.changeState(color);
-        });
 
 
         gameLogic = new GameLogic(gridModel);
 
+
+        movesLabel.textProperty().bind(Bindings.concat("Moves:", gameLogic.movesCounter()));
+
+
+        this.newGame();
+
+    }
+
+    @FXML
+    public void newGame(){
+        gameLogic.newGame();
     }
 
 }

@@ -2,22 +2,25 @@ package eu.lestard.colorpuzzlefx.core;
 
 import eu.lestard.grid.Cell;
 import eu.lestard.grid.GridModel;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.ReadOnlyIntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class GameLogic {
 
+    private IntegerProperty movesCounter = new SimpleIntegerProperty();
 
     private List<Cell<Colors>> selectedCells = new ArrayList<>();
 
     private Colors currentColor;
 
     private GridModel<Colors> gridModel;
+
+    private ColorProfile profile = new ColorProfile();
 
     public GameLogic(GridModel<Colors> gridModel){
         this.gridModel = gridModel;
@@ -30,18 +33,34 @@ public class GameLogic {
         selectedCells.add(cell);
 
         currentColor = cell.stateProperty().get();
+    }
 
+    public void newGame(){
+        Random rnd = new Random();
+
+        Set<Colors> colorsSet = profile.getProfile().keySet();
+        final Colors[] colorArray = colorsSet.toArray(new Colors[colorsSet.size()]);
+
+
+        gridModel.getCells().forEach(cell ->{
+            final Colors color = colorArray[rnd.nextInt(colorArray.length)];
+            cell.changeState(color);
+        });
+
+
+        movesCounter.setValue(0);
     }
 
     public void selectColor(Colors newSelectedColor){
         this.currentColor = newSelectedColor;
-        
+
         final List<Cell<Colors>> newSelectedCells = findNewSelectedCells(selectedCells, newSelectedColor);
 
         selectedCells = newSelectedCells;
 
         selectedCells.forEach(cell->cell.changeState(newSelectedColor));
 
+        movesCounter.setValue(movesCounter.get() + 1);
     }
 
     List<Cell<Colors>> findNewSelectedCells(List<Cell<Colors>> alreadySelected, final Colors color){
@@ -76,6 +95,10 @@ public class GameLogic {
 
     Stream<Cell<Colors>> findAllNeighbours(Stream<Cell<Colors>> stream){
         return stream.map(cell -> gridModel.getNeighbours(cell)).flatMap(cells -> cells.stream()).distinct();
+    }
+
+    public ReadOnlyIntegerProperty movesCounter(){
+        return movesCounter;
     }
 
 
