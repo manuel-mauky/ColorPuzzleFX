@@ -47,7 +47,12 @@ public class GridView<State extends Enum> extends StackPane {
     private void initGridModel() {
         NumberBinding pxPerCell = Bindings.min(rootPane.widthProperty(), rootPane.heightProperty()).divide(Configuration.size);
 
+        gridModelProperty.get().getCells().forEach(cell->{
+            addedCell(pxPerCell, cell);
+        });
+
         gridModelProperty.get().cells().addListener((ListChangeListener<Cell<State>>) change -> {
+            System.out.println("listChange");
             while (change.next()) {
 
                 if (change.wasAdded()) {

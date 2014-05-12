@@ -25,8 +25,6 @@ public class GameLogic {
     public GameLogic(GridModel<Colors> gridModel){
         this.gridModel = gridModel;
 
-        selectFirstCell();
-
         movesCounter.setValue(0);
     }
 

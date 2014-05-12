@@ -1,13 +1,9 @@
 package eu.lestard.colorpuzzlefx.view;
 
 import de.saxsys.jfx.mvvm.base.view.View;
-import eu.lestard.colorpuzzlefx.core.ColorProfile;
 import eu.lestard.colorpuzzlefx.core.Colors;
-import eu.lestard.colorpuzzlefx.core.Configuration;
-import eu.lestard.colorpuzzlefx.core.GameLogic;
 import eu.lestard.grid.GridModel;
 import eu.lestard.grid.GridView;
-import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -28,55 +24,40 @@ public class MainView extends View<MainViewModel> {
 
     private GridView<Colors> gridView;
 
-
-    private GameLogic gameLogic;
-
     @FXML
     private Label movesLabel;
-
-    private ColorProfile profile = new ColorProfile();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        GridModel<Colors> gridModel = new GridModel<>();
+        GridModel<Colors> gridModel = getViewModel().getGridModel();
 
         gridView = new GridView<>();
         gridView.setGridModel(gridModel);
 
         mainContainer.setCenter(gridView);
 
-        profile.getProfile().forEach((state, profileColor) -> {
+        getViewModel().getColorMappings().forEach((state, profileColor) -> {
             Button button = new Button();
             button.setGraphic(new Rectangle(40, 40, profileColor));
 
-            button.setOnAction(event-> gameLogic.selectColor(state));
+            button.setOnAction(event-> getViewModel().selectColorAction(state));
 
             buttonBar.getChildren().add(button);
 
             gridView.addColorMapping(state, profileColor);
         });
 
-        gridModel.numberOfColumns().bind(Configuration.size);
-        gridModel.numberOfRows().bind(Configuration.size);
 
 
-
-
-
-        gameLogic = new GameLogic(gridModel);
-
-
-        movesLabel.textProperty().bind(Bindings.concat("Moves:", gameLogic.movesCounter()));
-
+        movesLabel.textProperty().bind(getViewModel().movesLabelText());
 
         this.newGame();
-
     }
 
     @FXML
     public void newGame(){
-        gameLogic.newGame();
+        getViewModel().newGameAction();
     }
 
 }
