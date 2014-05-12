@@ -25,6 +25,15 @@ public class GameLogic {
     public GameLogic(GridModel<Colors> gridModel){
         this.gridModel = gridModel;
 
+        selectFirstCell();
+
+        movesCounter.setValue(0);
+    }
+
+    private void selectFirstCell(){
+
+        selectedCells.clear();
+
         final Cell<Colors> cell = gridModel.getCell(0, 0);
         if(cell == null){
             throw new IllegalArgumentException("There is no cell at [0,0]! The Grid has to be initialized before the gridLogic can be created");
@@ -32,20 +41,26 @@ public class GameLogic {
 
         selectedCells.add(cell);
 
+
         currentColor = cell.stateProperty().get();
+
+        selectColor(currentColor);
     }
 
     public void newGame(){
+
         Random rnd = new Random();
 
         Set<Colors> colorsSet = profile.getProfile().keySet();
         final Colors[] colorArray = colorsSet.toArray(new Colors[colorsSet.size()]);
 
-
         gridModel.getCells().forEach(cell ->{
             final Colors color = colorArray[rnd.nextInt(colorArray.length)];
             cell.changeState(color);
         });
+
+
+        selectFirstCell();
 
 
         movesCounter.setValue(0);
