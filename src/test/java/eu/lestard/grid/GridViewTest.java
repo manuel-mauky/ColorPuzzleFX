@@ -17,9 +17,13 @@ public class GridViewTest {
 
     private GridView<States> gridView;
 
+    private GridModel<States> gridModel;
+
     @Before
     public void setup(){
         gridView = new GridView<>();
+        gridModel = new GridModel<>();
+        gridView.setGridModel(gridModel);
     }
 
     @Test
@@ -27,8 +31,6 @@ public class GridViewTest {
 
         final ObservableList<Node> rectangles = gridView.getRootPane().getChildren();
         assertThat(rectangles).isEmpty();
-
-        final GridModel<States> gridModel = gridView.getGridModel();
 
         gridModel.cells().add(new Cell<>(0, 0));
 
@@ -48,7 +50,6 @@ public class GridViewTest {
     public void testWhenCellsAreRemovedFromModelThereAreRectanglesRemovedInView(){
         final ObservableList<Node> rectangles = gridView.getRootPane().getChildren();
 
-        final GridModel<States> gridModel = gridView.getGridModel();
         final Cell<States> cell_0_0 = new Cell<>(0, 0);
         gridModel.cells().add(cell_0_0);
 
