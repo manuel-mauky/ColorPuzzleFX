@@ -4,6 +4,7 @@ import eu.lestard.colorpuzzlefx.core.Configuration;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.NumberBinding;
 import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.ReadOnlyDoubleProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.ListChangeListener;
 import javafx.scene.layout.Pane;
@@ -111,6 +112,23 @@ public class GridView<State extends Enum> extends StackPane {
     public void addColorMapping(State state, Color color) {
         this.colorMapping.put(state, color);
     }
+
+    public ReadOnlyDoubleProperty rootWidthProperty(){
+        return rootPane.widthProperty();
+    }
+
+    public ReadOnlyDoubleProperty rootHeightProperty(){
+        return rootPane.heightProperty();
+    }
+
+    public ReadOnlyDoubleProperty rootLayoutXProperty(){
+        return rootPane.layoutXProperty();
+    }
+
+    public ReadOnlyDoubleProperty rootLayoutYProperty(){
+        return rootPane.layoutYProperty();
+    }
+
 
     Pane getRootPane() {
         return rootPane;

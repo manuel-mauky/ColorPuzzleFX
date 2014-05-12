@@ -1,13 +1,15 @@
 package eu.lestard.colorpuzzlefx.view;
 
 import de.saxsys.jfx.mvvm.base.view.View;
+import de.saxsys.jfx.mvvm.viewloader.ViewLoader;
+import de.saxsys.jfx.mvvm.viewloader.ViewTuple;
 import eu.lestard.colorpuzzlefx.core.Colors;
 import eu.lestard.grid.GridModel;
 import eu.lestard.grid.GridView;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Rectangle;
 
@@ -20,7 +22,7 @@ public class MainView extends View<MainViewModel> {
     private VBox buttonBar;
 
     @FXML
-    private BorderPane mainContainer;
+    private StackPane centerPane;
 
     private GridView<Colors> gridView;
 
@@ -35,13 +37,13 @@ public class MainView extends View<MainViewModel> {
         gridView = new GridView<>();
         gridView.setGridModel(gridModel);
 
-        mainContainer.setCenter(gridView);
+        centerPane.getChildren().add(gridView);
 
         getViewModel().getColorMappings().forEach((state, profileColor) -> {
             Button button = new Button();
             button.setGraphic(new Rectangle(40, 40, profileColor));
 
-            button.setOnAction(event-> getViewModel().selectColorAction(state));
+            button.setOnAction(event -> getViewModel().selectColorAction(state));
 
             buttonBar.getChildren().add(button);
 
@@ -49,10 +51,22 @@ public class MainView extends View<MainViewModel> {
         });
 
 
-
         movesLabel.textProperty().bind(getViewModel().movesLabelText());
 
+        initFinishedPopup();
+
         this.newGame();
+    }
+
+    private void initFinishedPopup() {
+        ViewLoader viewLoader = new ViewLoader();
+        final ViewTuple<FinishedViewModel> viewTuple = viewLoader.loadViewTuple(FinishedView.class);
+
+        viewTuple.getCodeBehind().getViewModel().setOnNewGame((v)-> newGame());
+
+        centerPane.getChildren().add(viewTuple.getView());
+
+        viewTuple.getView().visibleProperty().bind(getViewModel().gameFinished());
     }
 
     @FXML

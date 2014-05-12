@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="eu.lestard.colorpuzzlefx.view.FinishedView">
+<children><VBox alignment="CENTER" spacing="10.0">
+<children><Label fx:id="finishedLabel" text="You finished the Game">
+<font>
+<Font size="20.0" />
+</font></Label><Button mnemonicParsing="false" onAction="#newGame" text="New Game" />
+</children>
+<padding>
+<Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+</padding></VBox>
+</children></AnchorPane>

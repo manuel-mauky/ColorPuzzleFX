@@ -7,9 +7,7 @@ import eu.lestard.colorpuzzlefx.core.Configuration;
 import eu.lestard.colorpuzzlefx.core.GameLogic;
 import eu.lestard.grid.GridModel;
 import javafx.beans.binding.Bindings;
-import javafx.beans.property.ReadOnlyStringProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
+import javafx.beans.property.*;
 import javafx.scene.paint.Color;
 
 import java.util.Map;
@@ -23,6 +21,8 @@ public class MainViewModel implements ViewModel {
     private ColorProfile profile = new ColorProfile();
 
     private StringProperty movesLabelText = new SimpleStringProperty();
+
+    private BooleanProperty gameFinished = new SimpleBooleanProperty();
 
     public MainViewModel(){
         gridModel = new GridModel<>();
@@ -39,10 +39,15 @@ public class MainViewModel implements ViewModel {
 
     public void newGameAction(){
         gameLogic.newGame();
+        gameFinished.set(false);
     }
 
     public void selectColorAction(Colors color){
         gameLogic.selectColor(color);
+
+        if(gameLogic.isGameFinished()){
+            gameFinished.set(true);
+        }
     }
 
     public Map<Colors, Color> getColorMappings(){
@@ -51,6 +56,10 @@ public class MainViewModel implements ViewModel {
 
     public ReadOnlyStringProperty movesLabelText(){
         return movesLabelText;
+    }
+
+    public ReadOnlyBooleanProperty gameFinished(){
+        return gameFinished;
     }
 
     public GridModel<Colors> getGridModel() {

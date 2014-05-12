@@ -19,5 +19,7 @@
     <Button mnemonicParsing="false" onAction="#newGame" text="New Game" /><Label fx:id="movesLabel" text="score" />
   </items>
 </ToolBar>
-</top></BorderPane>
+</top>
+<center><StackPane fx:id="centerPane" prefHeight="150.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+</center></BorderPane>
 </children></AnchorPane>

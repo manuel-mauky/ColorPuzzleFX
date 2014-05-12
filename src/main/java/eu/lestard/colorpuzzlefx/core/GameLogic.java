@@ -76,6 +76,13 @@ public class GameLogic {
         movesCounter.setValue(movesCounter.get() + 1);
     }
 
+    public  boolean isGameFinished(){
+        final long numberOfCellsWithCurrentColor = gridModel.getCells().stream().filter(cell -> cell.stateProperty().get() == currentColor).count();
+        int numberOfAllCells = gridModel.getCells().size();
+        return numberOfAllCells == numberOfCellsWithCurrentColor;
+    }
+
+
     List<Cell<Colors>> findNewSelectedCells(List<Cell<Colors>> alreadySelected, final Colors color){
 
         Set<Cell<Colors>> result = new HashSet<>();
