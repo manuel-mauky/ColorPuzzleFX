@@ -11,6 +11,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
 import java.net.URL;
@@ -36,6 +37,8 @@ public class MainView extends View<MainViewModel> {
 
         gridView = new GridView<>();
         gridView.setGridModel(gridModel);
+
+        gridView.strokeProperty().set(Color.TRANSPARENT);
 
         centerPane.getChildren().add(gridView);
 

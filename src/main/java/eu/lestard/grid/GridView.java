@@ -3,13 +3,12 @@ package eu.lestard.grid;
 import eu.lestard.colorpuzzlefx.core.Configuration;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.NumberBinding;
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.ReadOnlyDoubleProperty;
-import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.*;
 import javafx.collections.ListChangeListener;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.StrokeType;
 
@@ -27,6 +26,9 @@ public class GridView<State extends Enum> extends StackPane {
 
     private Map<Cell<State>, Rectangle> rectangleMap = new HashMap<>();
 
+    private ObjectProperty<Paint> strokeProperty = new SimpleObjectProperty<>(Color.LIGHTGREY);
+
+    private DoubleProperty strokeWidthProperty = new SimpleDoubleProperty(1);
 
     public GridView() {
         final NumberBinding fullSize = Bindings.min(this.widthProperty(), this.heightProperty());
@@ -81,8 +83,8 @@ public class GridView<State extends Enum> extends StackPane {
 
         Rectangle rectangle = new Rectangle();
         rectangle.setStrokeType(StrokeType.INSIDE);
-        rectangle.setStroke(Color.LIGHTGREY);
-        rectangle.setStrokeWidth(1);
+        rectangle.strokeProperty().bind(strokeProperty);
+        rectangle.strokeWidthProperty().bind(strokeWidthProperty);
 
         rectangle.xProperty().bind(xStart);
         rectangle.yProperty().bind(yStart);
@@ -129,6 +131,13 @@ public class GridView<State extends Enum> extends StackPane {
         return rootPane.layoutYProperty();
     }
 
+    public DoubleProperty strokeWidthProperty(){
+        return strokeWidthProperty;
+    }
+
+    public ObjectProperty<Paint> strokeProperty(){
+        return strokeProperty;
+    }
 
     Pane getRootPane() {
         return rootPane;
