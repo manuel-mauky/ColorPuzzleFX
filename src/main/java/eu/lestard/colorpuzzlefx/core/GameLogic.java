@@ -65,6 +65,10 @@ public class GameLogic {
     }
 
     public void selectColor(Colors newSelectedColor){
+        if(currentColor == newSelectedColor){
+            return;
+        }
+
         this.currentColor = newSelectedColor;
 
         final List<Cell<Colors>> newSelectedCells = findNewSelectedCells(selectedCells, newSelectedColor);
