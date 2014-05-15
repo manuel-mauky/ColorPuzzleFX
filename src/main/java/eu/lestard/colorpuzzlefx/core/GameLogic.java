@@ -14,7 +14,7 @@ public class GameLogic {
 
     private IntegerProperty movesCounter = new SimpleIntegerProperty();
 
-    private List<Cell<Colors>> selectedCells = new ArrayList<>();
+    List<Cell<Colors>> selectedCells = new ArrayList<>();
 
     private Colors currentColor;
 
@@ -28,7 +28,7 @@ public class GameLogic {
         movesCounter.setValue(0);
     }
 
-    private void selectFirstCell(){
+    void selectFirstCell(){
 
         selectedCells.clear();
 
@@ -40,9 +40,7 @@ public class GameLogic {
         selectedCells.add(cell);
 
 
-        currentColor = cell.stateProperty().get();
-
-        selectColor(currentColor);
+        selectColor(cell.stateProperty().get());
     }
 
     public void newGame(){

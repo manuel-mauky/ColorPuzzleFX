@@ -136,4 +136,32 @@ public class GameLogicTest {
         assertThat(newSelectedCells).contains(gridModel.getCell(2, 2));
 
     }
+
+    /**
+     * 1 1 2
+     * 1 3 4
+     * 4 4 1
+     */
+    @Test
+    public void testSelectFirstCell(){
+        gridModel.getCell(0,0).changeState(Colors.Color1);
+        gridModel.getCell(0,1).changeState(Colors.Color1);
+        gridModel.getCell(0,2).changeState(Colors.Color2);
+
+        gridModel.getCell(1,0).changeState(Colors.Color1);
+        gridModel.getCell(1,1).changeState(Colors.Color3);
+        gridModel.getCell(1,2).changeState(Colors.Color4);
+
+        gridModel.getCell(2,0).changeState(Colors.Color4);
+        gridModel.getCell(2,1).changeState(Colors.Color4);
+        gridModel.getCell(2,2).changeState(Colors.Color1);
+
+
+        gameLogic.selectFirstCell();
+
+        assertThat(gameLogic.selectedCells).hasSize(3)
+            .contains(gridModel.getCell(0,0))
+            .contains(gridModel.getCell(0,1))
+            .contains(gridModel.getCell(1,0));
+    }
 }
