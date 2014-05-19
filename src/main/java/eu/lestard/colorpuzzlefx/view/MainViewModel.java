@@ -3,7 +3,6 @@ package eu.lestard.colorpuzzlefx.view;
 import de.saxsys.jfx.mvvm.base.viewmodel.ViewModel;
 import eu.lestard.colorpuzzlefx.core.ColorProfile;
 import eu.lestard.colorpuzzlefx.core.Colors;
-import eu.lestard.colorpuzzlefx.core.Configuration;
 import eu.lestard.colorpuzzlefx.core.GameLogic;
 import eu.lestard.grid.GridModel;
 import javafx.beans.binding.Bindings;
@@ -13,6 +12,8 @@ import javafx.scene.paint.Color;
 import java.util.Map;
 
 public class MainViewModel implements ViewModel {
+
+    private static final int SIZE = 10;
 
     private GridModel<Colors> gridModel;
 
@@ -32,8 +33,8 @@ public class MainViewModel implements ViewModel {
         movesLabelText.bind(Bindings.concat("Moves:", gameLogic.movesCounter()));
 
 
-        gridModel.numberOfColumns().bind(Configuration.size);
-        gridModel.numberOfRows().bind(Configuration.size);
+        gridModel.numberOfColumns().set(SIZE);
+        gridModel.numberOfRows().set(SIZE);
 
     }
 

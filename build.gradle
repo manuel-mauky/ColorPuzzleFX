@@ -3,6 +3,7 @@ apply plugin: "java"
 sourceCompatibility = 1.8
 
 repositories {
+    mavenLocal()
 	mavenCentral()
 }
 
@@ -10,6 +11,8 @@ repositories {
 dependencies {
 
     compile 'de.saxsys:mvvmFX:0.1.4'
+
+    compile "eu.lestard:grid:0.1.0"
 
     compile 'ch.qos.logback:logback-classic:1.1.2'
 
