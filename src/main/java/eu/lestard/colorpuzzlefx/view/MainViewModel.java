@@ -1,6 +1,6 @@
 package eu.lestard.colorpuzzlefx.view;
 
-import de.saxsys.jfx.mvvm.base.viewmodel.ViewModel;
+import de.saxsys.jfx.mvvm.api.ViewModel;
 import eu.lestard.colorpuzzlefx.core.ColorProfile;
 import eu.lestard.colorpuzzlefx.core.Colors;
 import eu.lestard.colorpuzzlefx.core.GameLogic;

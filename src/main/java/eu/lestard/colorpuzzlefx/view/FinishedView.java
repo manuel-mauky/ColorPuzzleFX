@@ -1,21 +1,21 @@
 package eu.lestard.colorpuzzlefx.view;
 
-import de.saxsys.jfx.mvvm.base.view.View;
+import de.saxsys.jfx.mvvm.api.FxmlView;
+import de.saxsys.jfx.mvvm.api.InjectViewModel;
 import javafx.fxml.FXML;
 
-import java.net.URL;
-import java.util.ResourceBundle;
+public class FinishedView implements FxmlView<FinishedViewModel> {
 
-public class FinishedView extends View<FinishedViewModel> {
-
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-
-    }
+    @InjectViewModel
+    private FinishedViewModel viewModel;
 
     @FXML
     public void newGame(){
-        getViewModel().newGame();
+        viewModel.newGame();
+    }
+
+    public FinishedViewModel getViewModel(){
+        return viewModel;
     }
 
 }

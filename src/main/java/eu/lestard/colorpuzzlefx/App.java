@@ -21,7 +21,7 @@ public class App extends Application {
 
         ViewLoader viewLoader = new ViewLoader();
 
-        final ViewTuple<MainViewModel> viewTuple = viewLoader.loadViewTuple(MainView.class);
+        final ViewTuple<MainView, MainViewModel> viewTuple = viewLoader.loadViewTuple(MainView.class);
 
         stage.setScene(new Scene(viewTuple.getView()));
 

@@ -2,11 +2,11 @@ package eu.lestard.grid;
 
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
-import javafx.scene.shape.Rectangle;
+import javafx.scene.layout.Pane;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.*;
 
 public class GridViewTest {
 
@@ -36,7 +36,7 @@ public class GridViewTest {
 
         assertThat(rectangles).hasSize(1);
 
-        final Rectangle rect1 = (Rectangle)rectangles.get(0);
+        final Pane rect1 = (Pane)rectangles.get(0);
         assertThat(rect1).isNotNull();
 
 

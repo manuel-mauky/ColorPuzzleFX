@@ -1,12 +1,14 @@
 package eu.lestard.colorpuzzlefx.view;
 
-import de.saxsys.jfx.mvvm.base.view.View;
+import de.saxsys.jfx.mvvm.api.FxmlView;
+import de.saxsys.jfx.mvvm.api.InjectViewModel;
 import de.saxsys.jfx.mvvm.viewloader.ViewLoader;
 import de.saxsys.jfx.mvvm.viewloader.ViewTuple;
 import eu.lestard.colorpuzzlefx.core.Colors;
 import eu.lestard.grid.GridModel;
 import eu.lestard.grid.GridView;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
@@ -17,7 +19,7 @@ import javafx.scene.shape.Rectangle;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class MainView extends View<MainViewModel> {
+public class MainView implements FxmlView<MainViewModel>, Initializable {
 
     @FXML
     private VBox buttonBar;
@@ -30,10 +32,13 @@ public class MainView extends View<MainViewModel> {
     @FXML
     private Label movesLabel;
 
+    @InjectViewModel
+    private MainViewModel viewModel;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        GridModel<Colors> gridModel = getViewModel().getGridModel();
+        GridModel<Colors> gridModel = viewModel.getGridModel();
 
         gridView = new GridView<>();
         gridView.setGridModel(gridModel);
@@ -42,11 +47,11 @@ public class MainView extends View<MainViewModel> {
 
         centerPane.getChildren().add(gridView);
 
-        getViewModel().getColorMappings().forEach((state, profileColor) -> {
+        viewModel.getColorMappings().forEach((state, profileColor) -> {
             Button button = new Button();
             button.setGraphic(new Rectangle(40, 40, profileColor));
 
-            button.setOnAction(event -> getViewModel().selectColorAction(state));
+            button.setOnAction(event -> viewModel.selectColorAction(state));
 
             buttonBar.getChildren().add(button);
 
@@ -54,7 +59,7 @@ public class MainView extends View<MainViewModel> {
         });
 
 
-        movesLabel.textProperty().bind(getViewModel().movesLabelText());
+        movesLabel.textProperty().bind(viewModel.movesLabelText());
 
         initFinishedPopup();
 
@@ -63,18 +68,18 @@ public class MainView extends View<MainViewModel> {
 
     private void initFinishedPopup() {
         ViewLoader viewLoader = new ViewLoader();
-        final ViewTuple<FinishedViewModel> viewTuple = viewLoader.loadViewTuple(FinishedView.class);
+        final ViewTuple<FinishedView, FinishedViewModel> viewTuple = viewLoader.loadViewTuple(FinishedView.class);
 
-        viewTuple.getCodeBehind().getViewModel().setOnNewGame((v)-> newGame());
+        viewTuple.getCodeBehind().getViewModel().setOnNewGame((v) -> newGame());
 
         centerPane.getChildren().add(viewTuple.getView());
 
-        viewTuple.getView().visibleProperty().bind(getViewModel().gameFinished());
+        viewTuple.getView().visibleProperty().bind(viewModel.gameFinished());
     }
 
     @FXML
     public void newGame(){
-        getViewModel().newGameAction();
+        viewModel.newGameAction();
     }
 
 }
