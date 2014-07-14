@@ -6,7 +6,13 @@ It's a remake of a [game](https://github.com/lestard/ColorPuzzle) I have develop
 
 ![ColorPuzzleFX screenshot](screenshot.png)
 
-## Run the game
+
+### Play the game
+
+You can download a runnable JAR from the [release-secton](https://github.com/lestard/ColorPuzzleFX/releases/download/v0.1.0/colorpuzzlefx.jar) of github. To run the game you need Oracles Java version 8 installed.
+
+
+### Build the game
 
 To build the game you need the build system [gradle](http://www.gradle.org/) to be installed.
 You can then run `gradle run` on the command line to execute the application.
