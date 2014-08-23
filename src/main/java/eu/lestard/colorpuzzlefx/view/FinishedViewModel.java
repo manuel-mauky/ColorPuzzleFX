@@ -1,7 +1,7 @@
 package eu.lestard.colorpuzzlefx.view;
 
 
-import de.saxsys.jfx.mvvm.api.ViewModel;
+import de.saxsys.mvvmfx.ViewModel;
 
 import java.util.function.Consumer;
 

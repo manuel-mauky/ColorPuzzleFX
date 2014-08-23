@@ -1,7 +1,7 @@
 package eu.lestard.colorpuzzlefx.view;
 
-import de.saxsys.jfx.mvvm.api.FxmlView;
-import de.saxsys.jfx.mvvm.api.InjectViewModel;
+import de.saxsys.mvvmfx.FxmlView;
+import de.saxsys.mvvmfx.InjectViewModel;
 import javafx.fxml.FXML;
 
 public class FinishedView implements FxmlView<FinishedViewModel> {
@@ -14,8 +14,5 @@ public class FinishedView implements FxmlView<FinishedViewModel> {
         viewModel.newGame();
     }
 
-    public FinishedViewModel getViewModel(){
-        return viewModel;
-    }
 
 }

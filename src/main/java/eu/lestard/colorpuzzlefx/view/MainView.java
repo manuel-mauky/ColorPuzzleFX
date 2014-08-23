@@ -1,9 +1,9 @@
 package eu.lestard.colorpuzzlefx.view;
 
-import de.saxsys.jfx.mvvm.api.FxmlView;
-import de.saxsys.jfx.mvvm.api.InjectViewModel;
-import de.saxsys.jfx.mvvm.viewloader.ViewLoader;
-import de.saxsys.jfx.mvvm.viewloader.ViewTuple;
+import de.saxsys.mvvmfx.FluentViewLoader;
+import de.saxsys.mvvmfx.FxmlView;
+import de.saxsys.mvvmfx.InjectViewModel;
+import de.saxsys.mvvmfx.ViewTuple;
 import eu.lestard.colorpuzzlefx.core.Colors;
 import eu.lestard.grid.GridModel;
 import eu.lestard.grid.GridView;
@@ -43,7 +43,7 @@ public class MainView implements FxmlView<MainViewModel>, Initializable {
         gridView = new GridView<>();
         gridView.setGridModel(gridModel);
 
-        gridView.strokeProperty().set(Color.TRANSPARENT);
+        gridView.cellBorderColorProperty().set(Color.TRANSPARENT);
 
         centerPane.getChildren().add(gridView);
 
@@ -67,10 +67,9 @@ public class MainView implements FxmlView<MainViewModel>, Initializable {
     }
 
     private void initFinishedPopup() {
-        ViewLoader viewLoader = new ViewLoader();
-        final ViewTuple<FinishedView, FinishedViewModel> viewTuple = viewLoader.loadViewTuple(FinishedView.class);
+        final ViewTuple<FinishedView, FinishedViewModel> viewTuple = FluentViewLoader.fxmlView(FinishedView.class).load();
 
-        viewTuple.getCodeBehind().getViewModel().setOnNewGame((v) -> newGame());
+        viewTuple.getViewModel().setOnNewGame((v) -> newGame());
 
         centerPane.getChildren().add(viewTuple.getView());
 

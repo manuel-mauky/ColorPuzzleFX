@@ -1,6 +1,6 @@
 package eu.lestard.colorpuzzlefx.view;
 
-import de.saxsys.jfx.mvvm.api.ViewModel;
+import de.saxsys.mvvmfx.ViewModel;
 import eu.lestard.colorpuzzlefx.core.ColorProfile;
 import eu.lestard.colorpuzzlefx.core.Colors;
 import eu.lestard.colorpuzzlefx.core.GameLogic;
@@ -35,7 +35,6 @@ public class MainViewModel implements ViewModel {
 
         gridModel.numberOfColumns().set(SIZE);
         gridModel.numberOfRows().set(SIZE);
-
     }
 
     public void newGameAction(){
@@ -67,5 +66,8 @@ public class MainViewModel implements ViewModel {
         return gridModel;
     }
 
+    public GameLogic getGameLogic(){
+        return gameLogic;
+    }
 
 }

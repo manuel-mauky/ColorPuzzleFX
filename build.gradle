@@ -26,9 +26,9 @@ repositories {
 
 dependencies {
 
-    compile 'de.saxsys:mvvmFX:0.2.0'
+    compile 'de.saxsys:mvvmFX:0.3.0'
 
-    compile "eu.lestard:grid:0.1.0-SNAPSHOT"
+    compile "eu.lestard:grid:0.1.0"
 
     compile 'ch.qos.logback:logback-classic:1.1.2'
 
