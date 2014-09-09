@@ -14,7 +14,7 @@ sourceCompatibility = 1.8
 
 
 mainClassName = "eu.lestard.colorpuzzlefx.App"
-manifest.mainAttributes("Main-Class" : mainClassName)
+jar.manifest.attributes("Main-Class" : mainClassName)
 
 repositories {
     mavenCentral()
@@ -36,4 +36,9 @@ dependencies {
     testCompile "junit:junit:4.11"
     testCompile "org.assertj:assertj-core:1.6.0"
     testCompile "eu.lestard:assertj-javafx:0.1.1"
+}
+
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.0'
 }

@@ -15,6 +15,6 @@ You can download a runnable JAR from the [release-secton](https://github.com/les
 ### Build the game
 
 To build the game you need the build system [gradle](http://www.gradle.org/) to be installed.
-You can then run `gradle run` on the command line to execute the application.
+You can then run `./gradlew run` (linux/mac-os) or `gradlew.bat run` (windows) on the command line to execute the application.
 
-A runnable JAR can be created with `gradle shadowJar`. The JAR file is then located under `build/libs/colorpuzzlefx-all.jar`. 
+A runnable JAR can be created with `./gradlew shadowJar`. The JAR file is then located under `build/libs/colorpuzzlefx-all.jar`. 
