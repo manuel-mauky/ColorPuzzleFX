@@ -23,6 +23,7 @@ public class App extends Application {
         final ViewTuple<MainView, MainViewModel> viewTuple = FluentViewLoader.fxmlView(MainView.class).load();
 
         stage.setScene(new Scene(viewTuple.getView()));
+        stage.sizeToScene();
         stage.show();
 
     }

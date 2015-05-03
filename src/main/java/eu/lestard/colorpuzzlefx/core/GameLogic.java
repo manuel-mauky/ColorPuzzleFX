@@ -116,7 +116,7 @@ public class GameLogic {
 
 
     Stream<Cell<Colors>> findAllNeighbours(Stream<Cell<Colors>> stream){
-        return stream.map(cell -> gridModel.getNeighbours(cell)).flatMap(cells -> cells.stream()).distinct();
+        return stream.map(gridModel::getNeighbours).flatMap(Collection::stream).distinct();
     }
 
     public ReadOnlyIntegerProperty movesCounter(){

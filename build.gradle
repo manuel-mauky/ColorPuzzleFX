@@ -4,9 +4,25 @@ plugins {
   id 'com.github.johnrengelman.shadow' version '1.2.0'
 }
 
+apply from: 'https://bintray.com/artifact/download/shemnon/javafx-gradle/8.1.1/javafx.plugin'
+
 sourceCompatibility = 1.8
 
+version = '1.0'
+
 mainClassName = "eu.lestard.colorpuzzlefx.App"
+
+javafx {
+    mainClass = mainClassName
+    appID 'ColorPuzzleFX'
+    appName 'ColorPuzzleFX'
+
+    category = 'games'
+    copyright = 'Copyright (c) 2015 Manuel Mauky'
+    description = 'A puzzle game where you need to fill all squares with the same color'
+    licenseType = 'GPL 3'
+    vendor = 'http://www.lestard.eu'
+}
 
 repositories {
     mavenCentral()
@@ -18,7 +34,7 @@ repositories {
 
 dependencies {
 
-    compile 'de.saxsys:mvvmfx:1.0.0'
+    compile 'de.saxsys:mvvmfx:1.1.0'
 
     compile "eu.lestard:grid:0.2.0"
 
@@ -32,5 +48,5 @@ dependencies {
 
 
 task wrapper(type: Wrapper) {
-    gradleVersion = '2.2.1'
+    gradleVersion = '2.3'
 }

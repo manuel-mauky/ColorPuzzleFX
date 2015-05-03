@@ -35,6 +35,8 @@ public class MainViewModel implements ViewModel {
 
         gridModel.numberOfColumns().set(SIZE);
         gridModel.numberOfRows().set(SIZE);
+
+        newGameAction();
     }
 
     public void newGameAction(){
