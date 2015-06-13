@@ -20,12 +20,8 @@ public class GameLogicTest {
 
     @Before
     public void setup(){
-        gridModel = new GridModel<>();
-
-        gridModel.setNumberOfColumns(5);
-        gridModel.setNumberOfRows(5);
-
-        gameLogic = new GameLogic(gridModel);
+        gameLogic = new GameLogic(5);
+        gridModel = gameLogic.getGridModel();
     }
 
 

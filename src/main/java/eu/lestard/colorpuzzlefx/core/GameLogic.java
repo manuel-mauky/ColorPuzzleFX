@@ -6,10 +6,14 @@ import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ReadOnlyIntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+
+@Singleton
 public class GameLogic {
 
     private IntegerProperty movesCounter = new SimpleIntegerProperty();
@@ -22,11 +26,23 @@ public class GameLogic {
 
     private ColorProfile profile = new ColorProfile();
 
-    public GameLogic(GridModel<Colors> gridModel){
-        this.gridModel = gridModel;
+    private List<Runnable> onFinishedListener = new ArrayList<>();
+
+
+    @Inject
+    public GameLogic() {
+        this(10);
+    }
+
+    public GameLogic(int size) {
+        this.gridModel = new GridModel<>();
+
+        gridModel.setNumberOfColumns(size);
+        gridModel.setNumberOfRows(size);
 
         movesCounter.setValue(0);
     }
+
 
     void selectFirstCell(){
 
@@ -73,9 +89,14 @@ public class GameLogic {
 
         selectedCells = newSelectedCells;
 
-        selectedCells.forEach(cell->cell.changeState(newSelectedColor));
+        selectedCells.forEach(cell -> cell.changeState(newSelectedColor));
 
         movesCounter.setValue(movesCounter.get() + 1);
+
+        if(isGameFinished()) {
+            onFinishedListener.forEach(Runnable::run);
+        }
+
     }
 
     public  boolean isGameFinished(){
@@ -84,6 +105,9 @@ public class GameLogic {
         return numberOfAllCells == numberOfCellsWithCurrentColor;
     }
 
+    public void onFinished(Runnable action) {
+        onFinishedListener.add(action);
+    }
 
     List<Cell<Colors>> findNewSelectedCells(List<Cell<Colors>> alreadySelected, final Colors color){
 
@@ -123,5 +147,17 @@ public class GameLogic {
         return movesCounter;
     }
 
+    public ColorProfile getProfile() {
+        return profile;
+    }
+
+    public GridModel<Colors> getGridModel() {
+        return gridModel;
+    }
+
+
+    public Colors getCurrentColor() {
+        return currentColor;
+    }
 
 }

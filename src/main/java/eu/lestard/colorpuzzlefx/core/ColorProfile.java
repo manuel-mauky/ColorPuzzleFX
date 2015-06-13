@@ -24,4 +24,7 @@ public class ColorProfile {
         return Collections.unmodifiableMap(profile);
     }
 
+    public Color getColor(Colors colors){
+        return profile.get(colors);
+    }
 }

@@ -5,7 +5,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="eu.lestard.colorpuzzlefx.view.MainView">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="eu.lestard.colorpuzzlefx.view.MainView">
 <children><BorderPane fx:id="mainContainer" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
 <center>
 </center>
@@ -14,9 +14,12 @@
 <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
 </padding></VBox>
 </right>
-<top><ToolBar prefWidth="200.0" BorderPane.alignment="CENTER">
+<top><ToolBar BorderPane.alignment="CENTER">
   <items>
-    <Button mnemonicParsing="false" onAction="#newGame" text="New Game" /><Label fx:id="movesLabel" text="score" />
+    <Button mnemonicParsing="false" onAction="#newGame" text="New Game" />
+                  <Label fx:id="movesLabel" text="score" />
+                  <Pane HBox.hgrow="ALWAYS" />
+                  <Button alignment="CENTER" mnemonicParsing="false" text="AI" onAction="#openAI"/>
   </items>
 </ToolBar>
 </top>

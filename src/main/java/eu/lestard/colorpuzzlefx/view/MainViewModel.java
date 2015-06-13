@@ -13,10 +13,6 @@ import java.util.Map;
 
 public class MainViewModel implements ViewModel {
 
-    private static final int SIZE = 10;
-
-    private GridModel<Colors> gridModel;
-
     private GameLogic gameLogic;
 
     private ColorProfile profile = new ColorProfile();
@@ -25,18 +21,14 @@ public class MainViewModel implements ViewModel {
 
     private BooleanProperty gameFinished = new SimpleBooleanProperty();
 
-    public MainViewModel(){
-        gridModel = new GridModel<>();
-
-        gameLogic = new GameLogic(gridModel);
+    public MainViewModel(GameLogic gameLogic){
+        this.gameLogic = gameLogic;
 
         movesLabelText.bind(Bindings.concat("Moves:", gameLogic.movesCounter()));
 
-
-        gridModel.numberOfColumns().set(SIZE);
-        gridModel.numberOfRows().set(SIZE);
-
         newGameAction();
+
+        gameLogic.onFinished(() -> gameFinished.setValue(true));
     }
 
     public void newGameAction(){
@@ -46,10 +38,6 @@ public class MainViewModel implements ViewModel {
 
     public void selectColorAction(Colors color){
         gameLogic.selectColor(color);
-
-        if(gameLogic.isGameFinished()){
-            gameFinished.set(true);
-        }
     }
 
     public Map<Colors, Color> getColorMappings(){
@@ -65,11 +53,14 @@ public class MainViewModel implements ViewModel {
     }
 
     public GridModel<Colors> getGridModel() {
-        return gridModel;
+        return gameLogic.getGridModel();
     }
 
     public GameLogic getGameLogic(){
         return gameLogic;
     }
 
+    public void openAI() {
+        SolverViewPopup.open();
+    }
 }

@@ -1,0 +1,51 @@
+package eu.lestard.colorpuzzlefx.view;
+
+import de.saxsys.mvvmfx.FxmlView;
+import de.saxsys.mvvmfx.InjectViewModel;
+import javafx.fxml.FXML;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.Slider;
+import javafx.scene.control.ToggleButton;
+import javafx.scene.shape.Rectangle;
+
+public class SolverView implements FxmlView<SolverViewModel>{
+
+    @FXML
+    public Label waitTimeLabel;
+    @FXML
+    public Slider waitTimeSlider;
+    @FXML
+    public Rectangle colorBlock;
+    @FXML
+    public ToggleButton autoButton;
+    @FXML
+    public Button nextButton;
+
+    @InjectViewModel
+    private SolverViewModel viewModel;
+
+    public void initialize() {
+        waitTimeLabel.textProperty().bind(viewModel.speedLabel());
+        colorBlock.fillProperty().bind(viewModel.nextColor());
+
+        viewModel.waitTime().bind(waitTimeSlider.valueProperty());
+
+        waitTimeSlider.setBlockIncrement(viewModel.getWaitTimeIncrement());
+        waitTimeSlider.setMin(viewModel.getMinWaitTime());
+        waitTimeSlider.setMax(viewModel.getMaxWaitTime());
+
+        autoButton.selectedProperty().bindBidirectional(viewModel.autoButtonPressed());
+
+        nextButton.disableProperty().bind(viewModel.autoButtonPressed());
+        waitTimeSlider.disableProperty().bind(viewModel.autoButtonPressed());
+    }
+
+    public void auto() {
+        viewModel.auto();
+    }
+
+    public void next() {
+        viewModel.next();
+    }
+}

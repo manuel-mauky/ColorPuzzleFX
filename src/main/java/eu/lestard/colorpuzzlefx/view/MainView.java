@@ -42,7 +42,7 @@ public class MainView implements FxmlView<MainViewModel>, Initializable {
 
         gridView = new GridView<>();
         gridView.setGridModel(gridModel);
-        gridView.setMinSize(0,0);
+        gridView.setMinSize(0, 0);
 
         gridView.cellBorderColorProperty().set(Color.TRANSPARENT);
 
@@ -63,6 +63,7 @@ public class MainView implements FxmlView<MainViewModel>, Initializable {
         movesLabel.textProperty().bind(viewModel.movesLabelText());
 
         initFinishedPopup();
+
     }
 
     private void initFinishedPopup() {
@@ -80,4 +81,7 @@ public class MainView implements FxmlView<MainViewModel>, Initializable {
         viewModel.newGameAction();
     }
 
+    public void openAI() {
+        this.viewModel.openAI();
+    }
 }
