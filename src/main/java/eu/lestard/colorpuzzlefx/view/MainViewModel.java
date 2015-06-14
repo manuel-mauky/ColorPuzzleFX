@@ -4,6 +4,7 @@ import de.saxsys.mvvmfx.ViewModel;
 import eu.lestard.colorpuzzlefx.core.ColorProfile;
 import eu.lestard.colorpuzzlefx.core.Colors;
 import eu.lestard.colorpuzzlefx.core.GameLogic;
+import eu.lestard.colorpuzzlefx.view.ai.solver.SolverViewPopup;
 import eu.lestard.grid.GridModel;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.*;

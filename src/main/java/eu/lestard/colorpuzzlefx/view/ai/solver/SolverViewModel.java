@@ -1,4 +1,4 @@
-package eu.lestard.colorpuzzlefx.view;
+package eu.lestard.colorpuzzlefx.view.ai.solver;
 
 import eu.lestard.colorpuzzlefx.ai.SolverManager;
 import javafx.animation.Animation;

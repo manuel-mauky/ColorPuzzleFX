@@ -1,4 +1,4 @@
-package eu.lestard.colorpuzzlefx.view;
+package eu.lestard.colorpuzzlefx.view.ai.solver;
 
 import de.saxsys.mvvmfx.FluentViewLoader;
 import de.saxsys.mvvmfx.ViewTuple;
