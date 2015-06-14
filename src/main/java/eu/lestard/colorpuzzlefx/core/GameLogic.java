@@ -156,6 +156,10 @@ public class GameLogic {
     }
 
 
+    public List<Cell<Colors>> getSelectedCells() {
+        return selectedCells;
+    }
+
     public Colors getCurrentColor() {
         return currentColor;
     }

@@ -91,7 +91,7 @@ public class SolverViewModel implements ViewModel{
 
     public void pause() {
         timeline.pause();
-        
+
         autoButtonPressed.setValue(false);
     }
 

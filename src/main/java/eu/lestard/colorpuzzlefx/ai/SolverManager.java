@@ -14,6 +14,7 @@ public class SolverManager {
     public SolverManager() {
         solverMap.put("Bogo Solver", new BogoSolver());
         solverMap.put("Brute Force Solver", new BruteForceSolver());
+        solverMap.put("Solver 1", new Solver1());
     }
 
 
