@@ -3,10 +3,7 @@ package eu.lestard.colorpuzzlefx.view;
 import de.saxsys.mvvmfx.FxmlView;
 import de.saxsys.mvvmfx.InjectViewModel;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.Slider;
-import javafx.scene.control.ToggleButton;
+import javafx.scene.control.*;
 import javafx.scene.shape.Rectangle;
 
 public class SolverView implements FxmlView<SolverViewModel>{
@@ -21,11 +18,18 @@ public class SolverView implements FxmlView<SolverViewModel>{
     public ToggleButton autoButton;
     @FXML
     public Button nextButton;
+    @FXML
+    public ChoiceBox<String> solverChoiceBox;
 
     @InjectViewModel
     private SolverViewModel viewModel;
 
     public void initialize() {
+        solverChoiceBox.setItems(viewModel.solverNames());
+        solverChoiceBox.getSelectionModel().select(0);
+        viewModel.selectedSolverName().bind(solverChoiceBox.getSelectionModel().selectedItemProperty());
+
+
         waitTimeLabel.textProperty().bind(viewModel.speedLabel());
         colorBlock.fillProperty().bind(viewModel.nextColor());
 

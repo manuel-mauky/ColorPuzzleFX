@@ -8,35 +8,53 @@
 
 <AnchorPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="eu.lestard.colorpuzzlefx.view.SolverView">
    <children>
-      <HBox alignment="CENTER_RIGHT" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <VBox spacing="5.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <VBox alignment="CENTER_LEFT" spacing="5.0">
+            <HBox alignment="CENTER_LEFT">
                <children>
-                  <VBox>
+                  <Label maxWidth="1.7976931348623157E308" text="Solver:" HBox.hgrow="ALWAYS" />
+                  <ChoiceBox fx:id="solverChoiceBox" prefWidth="150.0" />
+               </children>
+            </HBox>
+            <Separator>
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+            </Separator>
+            <HBox alignment="CENTER_RIGHT">
+               <children>
+                  <VBox alignment="CENTER_LEFT" spacing="5.0">
                      <children>
-                        <Label fx:id="waitTimeLabel" text="Wait Time:" />
-                        <Slider fx:id="waitTimeSlider" />
+                        <VBox>
+                           <children>
+                              <Label fx:id="waitTimeLabel" text="Wait Time:" />
+                              <Slider fx:id="waitTimeSlider" />
+                           </children>
+                        </VBox>
+                        <HBox spacing="5.0">
+                           <children>
+                              <ToggleButton fx:id="autoButton" mnemonicParsing="false" onAction="#auto" text="Auto" />
+                              <Button fx:id="nextButton" mnemonicParsing="false" onAction="#next" text="Next" />
+                           </children>
+                           <padding>
+                              <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                           </padding>
+                        </HBox>
                      </children>
                   </VBox>
-                  <HBox spacing="5.0">
+                  <Separator orientation="VERTICAL" />
+                  <VBox alignment="CENTER" spacing="5.0">
                      <children>
-                        <ToggleButton fx:id="autoButton" mnemonicParsing="false" onAction="#auto" text="Auto" />
-                        <Button fx:id="nextButton" mnemonicParsing="false" onAction="#next" text="Next" />
+                        <Label text="Next Color:" />
+                        <Rectangle fx:id="colorBlock" arcHeight="5.0" arcWidth="5.0" height="50.0" stroke="BLACK" strokeType="INSIDE" width="50.0" />
                      </children>
-                     <padding>
-                        <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
-                     </padding>
-                  </HBox>
+                  </VBox>
                </children>
-            </VBox>
-            <Separator orientation="VERTICAL" />
-            <VBox alignment="CENTER" spacing="5.0">
-               <children>
-                  <Label text="Next Color:" />
-                  <Rectangle fx:id="colorBlock" arcHeight="5.0" arcWidth="5.0" height="50.0" stroke="BLACK" strokeType="INSIDE" width="50.0" />
-               </children>
-            </VBox>
+            </HBox>
          </children>
-      </HBox>
+         <padding>
+            <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+         </padding>
+      </VBox>
    </children>
 </AnchorPane>

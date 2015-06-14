@@ -1,6 +1,7 @@
 package eu.lestard.colorpuzzlefx.view;
 
 import de.saxsys.mvvmfx.FluentViewLoader;
+import de.saxsys.mvvmfx.ViewTuple;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
@@ -12,7 +13,12 @@ public class SolverViewPopup {
 
         if(stage == null) {
             stage = new Stage();
-            stage.setScene(new Scene(FluentViewLoader.fxmlView(SolverView.class).load().getView()));
+            final ViewTuple<SolverView, SolverViewModel> viewTuple = FluentViewLoader.fxmlView(SolverView.class).load();
+
+            final SolverViewModel solverViewModel = viewTuple.getViewModel();
+            stage.setOnCloseRequest(event -> solverViewModel.pause());
+
+            stage.setScene(new Scene(viewTuple.getView()));
         }
 
         stage.show();

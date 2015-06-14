@@ -9,6 +9,5 @@ public enum Colors {
     Color5,
     Color6,
     Color7,
-    Color8,
 
 }

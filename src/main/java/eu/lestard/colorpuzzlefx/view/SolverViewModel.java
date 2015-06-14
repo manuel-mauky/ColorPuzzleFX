@@ -1,10 +1,6 @@
 package eu.lestard.colorpuzzlefx.view;
 
-import de.saxsys.mvvmfx.ViewModel;
-import eu.lestard.colorpuzzlefx.ai.Solver;
-import eu.lestard.colorpuzzlefx.core.ColorProfile;
-import eu.lestard.colorpuzzlefx.core.Colors;
-import eu.lestard.colorpuzzlefx.core.GameLogic;
+import eu.lestard.colorpuzzlefx.ai.SolverManager;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -12,8 +8,18 @@ import javafx.beans.binding.Bindings;
 import javafx.beans.property.*;
 import javafx.beans.value.ObservableStringValue;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.paint.Paint;
 import javafx.util.Duration;
+
+import de.saxsys.mvvmfx.ViewModel;
+import eu.lestard.colorpuzzlefx.ai.Solver;
+import eu.lestard.colorpuzzlefx.core.ColorProfile;
+import eu.lestard.colorpuzzlefx.core.Colors;
+import eu.lestard.colorpuzzlefx.core.GameLogic;
+
+import java.util.Optional;
 
 public class SolverViewModel implements ViewModel{
 
@@ -23,24 +29,39 @@ public class SolverViewModel implements ViewModel{
     private BooleanProperty autoButtonPressed = new SimpleBooleanProperty();
     private DoubleProperty waitTime = new SimpleDoubleProperty(1);
 
+    private ObservableList<String> solverNames = FXCollections.observableArrayList();
+    private StringProperty selectedSolverName = new SimpleStringProperty();
+
     private Solver solver;
     private GameLogic gameLogic;
+    private SolverManager solverManager;
     private Colors nextStep;
     private ColorProfile colorProfile = new ColorProfile();
 
     private Timeline timeline;
 
-    public SolverViewModel(Solver solver, GameLogic gameLogic) {
-        this.solver = solver;
+    public SolverViewModel(GameLogic gameLogic, SolverManager solverManager) {
         this.gameLogic = gameLogic;
+        this.solverManager = solverManager;
+
+        solverNames.addAll(solverManager.getSolverNames());
+
+
+        selectedSolverName.addListener((observable1, oldValue1, newValue) -> {
+            if (newValue != null) {
+                final Optional<Solver> solverOptional = solverManager.getSolver(newValue);
+
+                if (solverOptional.isPresent()) {
+                    solver = solverOptional.get();
+                    solver.setGame(gameLogic);
+                    nextStep = solver.nextStep();
+                    nextColor.set(colorProfile.getColor(nextStep));
+                }
+            }
+        });
 
 
         speedLabel.bind(Bindings.format("Wait time: %1$.1f s", waitTime));
-
-
-        solver.setGame(gameLogic);
-
-        next();
 
         waitTime.addListener((observable, oldValue, newValue) -> {
            this.timeline = createTimeline();
@@ -66,6 +87,12 @@ public class SolverViewModel implements ViewModel{
         } else {
             timeline.pause();
         }
+    }
+
+    public void pause() {
+        timeline.pause();
+        
+        autoButtonPressed.setValue(false);
     }
 
     public void next() {
@@ -109,6 +136,14 @@ public class SolverViewModel implements ViewModel{
 
     public ObservableStringValue speedLabel() {
         return speedLabel;
+    }
+
+    public StringProperty selectedSolverName() {
+        return selectedSolverName;
+    }
+
+    public ObservableList<String> solverNames() {
+        return solverNames;
     }
 
 }
