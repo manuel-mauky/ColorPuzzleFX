@@ -52,4 +52,8 @@ public class SolverView implements FxmlView<SolverViewModel>{
     public void next() {
         viewModel.next();
     }
+
+    public void openBenchmark() {
+        viewModel.openBenchmark();
+    }
 }

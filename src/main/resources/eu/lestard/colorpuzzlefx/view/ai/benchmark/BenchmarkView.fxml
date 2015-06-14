@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="eu.lestard.colorpuzzlefx.view.ai.benchmark.BenchmarkView">
+   <children>
+      <VBox spacing="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <HBox alignment="CENTER_LEFT" spacing="5.0">
+               <children>
+                  <Button mnemonicParsing="false" onAction="#refresh" text="Refresh" />
+                  <Label alignment="CENTER_RIGHT" maxWidth="1.7976931348623157E308" text="Sample size:" HBox.hgrow="ALWAYS" />
+                  <Spinner fx:id="sampleSpinner" />
+               </children>
+               <padding>
+                  <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+               </padding>
+            </HBox>
+            <TableView fx:id="solverTable" editable="true">
+              <columns>
+                  <TableColumn fx:id="activeColumn" prefWidth="75.0" text="Active" />
+                  <TableColumn fx:id="nameColumn" prefWidth="200.0" text="Name" />
+                  <TableColumn fx:id="averageColumn" prefWidth="150.0" text="Average" />
+                  <TableColumn fx:id="medianColumn" prefWidth="75.0" text="Median" />
+                  <TableColumn fx:id="maxColumn" prefWidth="75.0" text="Max" />
+                  <TableColumn fx:id="minColumn" prefWidth="75.0" text="Min" />
+                  <TableColumn fx:id="progressColumn" prefWidth="200.0" text="Progress" />
+              </columns>
+            </TableView>
+         </children>
+         <padding>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </padding>
+      </VBox>
+   </children>
+</AnchorPane>

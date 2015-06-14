@@ -25,4 +25,10 @@ public class SolverViewPopup {
         stage.toFront();
     }
 
+    public static void close() {
+        if(stage != null) {
+            stage.close();
+        }
+    }
+
 }

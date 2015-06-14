@@ -1,6 +1,7 @@
 package eu.lestard.colorpuzzlefx.view.ai.solver;
 
 import eu.lestard.colorpuzzlefx.ai.SolverManager;
+import eu.lestard.colorpuzzlefx.view.ai.benchmark.BenchmarkViewPopup;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -96,7 +97,10 @@ public class SolverViewModel implements ViewModel{
     }
 
     public void next() {
-        if(!gameLogic.isGameFinished()) {
+
+        if(gameLogic.isGameFinished()) {
+            pause();
+        } else {
 
 
             if(nextStep != null) {
@@ -105,6 +109,7 @@ public class SolverViewModel implements ViewModel{
 
             nextStep = solver.nextStep();
             nextColor.set(colorProfile.getColor(nextStep));
+
         }
     }
 
@@ -146,4 +151,8 @@ public class SolverViewModel implements ViewModel{
         return solverNames;
     }
 
+    public void openBenchmark() {
+        BenchmarkViewPopup.open();
+        SolverViewPopup.close();
+    }
 }

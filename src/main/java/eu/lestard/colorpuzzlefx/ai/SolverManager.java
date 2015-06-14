@@ -1,14 +1,14 @@
 package eu.lestard.colorpuzzlefx.ai;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.TreeMap;
 import java.util.stream.Collectors;
 
 public class SolverManager {
 
-    private Map<String, Solver> solverMap = new HashMap<>();
+    private Map<String, Solver> solverMap = new TreeMap<>();
 
 
     public SolverManager() {
